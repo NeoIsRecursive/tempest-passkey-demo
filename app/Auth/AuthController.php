@@ -86,8 +86,8 @@ final readonly class AuthController
         query(Passkey::class)
             ->create(
                 user_id: (int) $user->id->value,
-                credential_id: $data['credential_id'],
-                public_key: $data['public_key'],
+                credential_id: $data->credentialId,
+                public_key: $data->publicKey,
                 created_at: DateTime::now(),
                 updated_at: DateTime::now(),
             );

@@ -1,28 +1,41 @@
+import { Button } from "@/components/button";
 import { Layout } from "@/components/layout";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemTitle,
+} from "@/components/ui/item";
+import { addPasskey } from "@/lib/webauthn/add";
 import type { PageProps } from "@/types/inertia";
 import type { Datetime, Passkey } from "@/types/models";
+import { Form, router } from "@inertiajs/react";
+import { useState } from "react";
 
 type Props = PageProps<{
   passkeys: Passkey[];
 }>;
 
 export default function Dashboard({ user, passkeys }: Props) {
+  const [isPending, setIsPending] = useState(false);
+
   if (!user) throw new Error("User not found");
 
-  const dateFmt = (datetime: Datetime) => {
-    const date = new Date(
-      Date.UTC(
-        datetime.year,
-        datetime.month - 1, // months are 0-based in JS
-        datetime.day,
-        datetime.hours,
-        datetime.minutes,
-        datetime.seconds,
-        Math.floor(datetime.nanoseconds / 1e6),
-      ),
-    );
+  const handleAddPasskey = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    return date.toLocaleString();
+    setIsPending(true);
+
+    try {
+      setIsPending(true);
+      await addPasskey(user!.email);
+
+      router.reload();
+    } catch (error) {
+      setIsPending(false);
+    }
   };
 
   return (
@@ -35,16 +48,54 @@ export default function Dashboard({ user, passkeys }: Props) {
       {passkeys.length === 0 ? (
         <p>No passkeys registered.</p>
       ) : (
-        <ul className="list-disc">
+        <ItemGroup className="grid gap-4">
           {passkeys.map((pk) => (
-            <li key={pk.id.value} className="mb-2">
-              <p>Credential ID: {pk.credential_id}</p>
-              <p>Registered on: {dateFmt(pk.created_at)}</p>
-              <p>Last accessed: {dateFmt(pk.updated_at)}</p>
-            </li>
+            <Item variant="outline" key={pk.id.value}>
+              <ItemContent>
+                <ItemTitle>Credential ID: {pk.credential_id}</ItemTitle>
+                <ItemDescription>
+                  Registered on: {dateFmt(pk.created_at)}
+                  <br />
+                  Last accessed: {dateFmt(pk.updated_at)}
+                </ItemDescription>
+              </ItemContent>
+              <ItemActions>
+                <Form
+                  method="DELETE"
+                  action="/auth/passkeys/remove"
+                  onSuccess={() => {
+                    console.log("removed", pk);
+                  }}
+                >
+                  <input type="hidden" name="passkey_id" value={pk.id.value} />
+                  <Button variant="destructive" size="sm">
+                    Delete
+                  </Button>
+                </Form>
+              </ItemActions>
+            </Item>
           ))}
-        </ul>
+        </ItemGroup>
       )}
+      <form onSubmit={handleAddPasskey}>
+        <Button disabled={isPending}>Add new passkey</Button>
+      </form>
     </Layout>
   );
 }
+
+const dateFmt = (datetime: Datetime) => {
+  const date = new Date(
+    Date.UTC(
+      datetime.year,
+      datetime.month - 1, // months are 0-based in JS
+      datetime.day,
+      datetime.hours,
+      datetime.minutes,
+      datetime.seconds,
+      Math.floor(datetime.nanoseconds / 1e6),
+    ),
+  );
+
+  return date.toLocaleString();
+};
