@@ -54,9 +54,9 @@ export default function Dashboard({ user, passkeys }: Props) {
               <ItemContent>
                 <ItemTitle>Credential ID: {pk.credential_id}</ItemTitle>
                 <ItemDescription>
-                  Registered on: {dateFmt(pk.created_at)}
+                  Created: {dateFmt(pk.created_at)}
                   <br />
-                  Last accessed: {dateFmt(pk.updated_at)}
+                  Last used: {dateFmt(pk.updated_at)}
                 </ItemDescription>
               </ItemContent>
               <ItemActions>

@@ -44,7 +44,7 @@ final readonly class AuthController
     {
         $authenticator->deauthenticate();
 
-        return new Redirect('/');
+        return new Redirect(uri([self::class, 'login']));
     }
 
     #[Post('/auth/register/options')]
