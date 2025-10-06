@@ -17,7 +17,7 @@ use Tempest\Http\Session\Session;
 
 use function Tempest\Support\Random\uuid;
 
-final readonly class GenerateWebauthnOptions
+final readonly class RegisterPasskey
 {
     public function __construct(
         private SessionChallengeManager $challengeManager,
@@ -25,7 +25,7 @@ final readonly class GenerateWebauthnOptions
         private Session $session,
     ) {}
 
-    public function forRegistration(string $userUuid, string $email): array
+    public function start(string $userUuid, string $email): array
     {
         $this->session->set('registration_data', [
             'userId' => $userUuid,
@@ -63,7 +63,7 @@ final readonly class GenerateWebauthnOptions
         ];
     }
 
-    public function verifyRegistration(array $body)
+    public function complete(array $body)
     {
         $data = $this->session->get('registration_data');
 

@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Auth\GenerateWebauthnOptions;
+use App\Auth\LoginPasskey;
+use App\Auth\RegisterPasskey;
 use App\Auth\Requests\StartRegistration;
-use App\Auth\SessionChallengeManager;
-use App\Auth\WebauthnConfig;
-use Exception;
-use Firehed\WebAuthn\ArrayBufferResponseParser;
-use Firehed\WebAuthn\Codecs\Credential;
-use Firehed\WebAuthn\CredentialContainer;
-use Firehed\WebAuthn\ExpiringChallenge;
 use NeoIsRecursive\Inertia\Http\InertiaResponse;
 use Tempest\Auth\Authentication\Authenticator;
 use Tempest\DateTime\DateTime;
@@ -21,16 +15,13 @@ use Tempest\Http\Request;
 use Tempest\Http\Responses\Forbidden;
 use Tempest\Http\Responses\Json;
 use Tempest\Http\Responses\Redirect;
-use Tempest\Http\Session\Session;
 use Tempest\Http\Status;
 use Tempest\Router\Get;
 use Tempest\Router\Post;
 
 use function NeoIsRecursive\Inertia\inertia;
 use function Tempest\Database\query;
-use function Tempest\env;
 use function Tempest\Router\uri;
-use function Tempest\Support\arr;
 use function Tempest\Support\Random\uuid;
 
 final readonly class AuthController
@@ -45,8 +36,16 @@ final readonly class AuthController
         return inertia('auth');
     }
 
+    #[Post('/auth/logout')]
+    public function logout(Authenticator $authenticator)
+    {
+        $authenticator->deauthenticate();
+
+        return new Redirect('/');
+    }
+
     #[Post('/auth/register/options')]
-    public function registrationOptions(StartRegistration $request, GenerateWebauthnOptions $webauthn)
+    public function registrationOptions(StartRegistration $request, RegisterPasskey $webauthn)
     {
         $user = query(User::class)->find(email: $request->email)->first();
 
@@ -58,7 +57,7 @@ final readonly class AuthController
             );
         }
 
-        $data = $webauthn->forRegistration(
+        $data = $webauthn->start(
             userUuid: uuid(),
             email: $request->email,
         );
@@ -67,9 +66,9 @@ final readonly class AuthController
     }
 
     #[Post('/auth/register/complete')]
-    public function completeRegistration(Request $request, Authenticator $authenticator, GenerateWebauthnOptions $webauthn)
+    public function completeRegistration(Request $request, Authenticator $authenticator, RegisterPasskey $webauthn)
     {
-        $data = $webauthn->verifyRegistration($request->body);
+        $data = $webauthn->complete($request->body);
 
         $user = query(User::class)
             ->create(
@@ -96,7 +95,7 @@ final readonly class AuthController
     }
 
     #[Post('/auth/login/options')]
-    public function loginOptions(Request $request, Session $session)
+    public function loginOptions(Request $request, LoginPasskey $login)
     {
         $user = query(User::class)
             ->find(email: $request->get('email'))
@@ -107,79 +106,29 @@ final readonly class AuthController
             return new Forbidden();
         }
 
-        $session->set(WebauthnConfig::USER_UUID_SESSION_KEY, $user->uuid);
+        $data = $login->start($user);
 
-        $codec = new Credential();
-        $challengeManager = new SessionChallengeManager($session);
-
-        $credentials = arr($user->passkeys)->map(
-            fn (Passkey $key) => $codec->decode($key->public_key),
-        );
-
-        $credentialsContainer = new CredentialContainer($credentials->toArray());
-
-        // Generate and manage challenge
-        $challenge = ExpiringChallenge::withLifetime(300);
-        $challengeManager->manageChallenge($challenge);
-
-        return new Json([
-            'challengeB64' => $challenge->getBase64(),
-            'credential_ids' => $credentialsContainer->getBase64Ids(),
-        ]);
+        return new Json($data);
     }
 
     #[Post('/auth/login/complete')]
-    public function completeLogin(Request $request, Session $session, Authenticator $authenticator)
+    public function completeLogin(Request $request, LoginPasskey $login, Authenticator $authenticator)
     {
-        $parser = new ArrayBufferResponseParser();
-        $getResponse = $parser->parseGetResponse($request->body);
-        $userUuid = $getResponse->getUserHandle();
+        $data = $login->complete($request->body);
 
-        $codec = new Credential();
-        $challengeManager = new SessionChallengeManager($session);
-        $rp = new \Firehed\WebAuthn\SingleOriginRelyingParty(env('BASE_URI'));
-
-        if ($userUuid !== null && $userUuid !== $session->consume(WebauthnConfig::USER_UUID_SESSION_KEY)) {
-            throw new Exception('User handle does not match authentcating user');
-        }
-
-        $user = query(User::class)
-            ->find(uuid: $userUuid)
-            ->with('passkeys')
-            ->first();
-
-        $credentials = arr($user->passkeys)->map(
-            fn (Passkey $key) => $codec->decode($key->public_key),
-        );
-
-        $credentialContainer = new CredentialContainer($credentials->toArray());
-
-        $updatedCredential = $getResponse->verify($challengeManager, $rp, $credentialContainer);
-
-        // Update the credential
-        $encodedCredential = $codec->encode($updatedCredential);
+        $authenticator->authenticate($data['user']);
 
         query(Passkey::class)
             ->update(
-                public_key: $encodedCredential,
+                public_key: $data['encodedCredential'],
                 updated_at: DateTime::now(),
             )
-            ->whereField('credential_id', $updatedCredential->getStorageId())
-            ->whereField('user_id', $user->id->value)
+            ->whereField('credential_id', $data['credential']->getStorageId())
+            ->whereField('user_id', $data['user']->id->value)
             ->execute();
-
-        $authenticator->authenticate($user);
 
         return new Json([
             'redirectUri' => uri([DashboardController::class, 'index']),
         ]);
-    }
-
-    #[Post('/auth/logout')]
-    public function logout(Authenticator $authenticator)
-    {
-        $authenticator->deauthenticate();
-
-        return new Redirect('/');
     }
 }
