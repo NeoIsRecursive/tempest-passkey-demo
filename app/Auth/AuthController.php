@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Auth;
 
-use App\Auth\LoginPasskey;
-use App\Auth\RegisterPasskey;
 use App\Auth\Requests\StartRegistration;
+use App\Auth\Webauthn\LoginPasskey;
+use App\Auth\Webauthn\RegisterPasskey;
+use App\DashboardController;
+use App\Passkey;
+use App\User;
 use NeoIsRecursive\Inertia\Http\InertiaResponse;
 use Tempest\Auth\Authentication\Authenticator;
 use Tempest\DateTime\DateTime;
@@ -108,7 +111,7 @@ final readonly class AuthController
 
         $data = $login->start($user);
 
-        return new Json($data);
+        return new Json($data->jsonSerialize());
     }
 
     #[Post('/auth/login/complete')]
@@ -116,15 +119,15 @@ final readonly class AuthController
     {
         $data = $login->complete($request->body);
 
-        $authenticator->authenticate($data['user']);
+        $authenticator->authenticate($data->user);
 
         query(Passkey::class)
             ->update(
-                public_key: $data['encodedCredential'],
+                public_key: $data->publicKey,
                 updated_at: DateTime::now(),
             )
-            ->whereField('credential_id', $data['credential']->getStorageId())
-            ->whereField('user_id', $data['user']->id->value)
+            ->whereField('credential_id', $data->credential->getStorageId())
+            ->whereField('user_id', $data->user->id->value)
             ->execute();
 
         return new Json([

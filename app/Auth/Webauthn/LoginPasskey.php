@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Auth;
+namespace App\Auth\Webauthn;
 
+use App\Auth\SessionChallengeManager;
+use App\Auth\Webauthn\LoginCompleted;
+use App\Auth\Webauthn\LoginStarted;
+use App\Auth\WebauthnConfig;
 use App\Passkey;
 use App\User;
 use Exception;
@@ -41,10 +45,10 @@ final class LoginPasskey
         $challenge = ExpiringChallenge::withLifetime(300);
         $challengeManager->manageChallenge($challenge);
 
-        return [
-            'challengeB64' => $challenge->getBase64(),
-            'credential_ids' => $credentialsContainer->getBase64Ids(),
-        ];
+        return new LoginStarted(
+            challenge: $challenge,
+            credentials: $credentialsContainer,
+        );
     }
 
     public function complete(array $requestBody)
@@ -78,10 +82,10 @@ final class LoginPasskey
         // Update the credential
         $encodedCredential = $codec->encode($updatedCredential);
 
-        return [
-            'user' => $user,
-            'credential' => $updatedCredential,
-            'encodedCredential' => $encodedCredential,
-        ];
+        return new LoginCompleted(
+            user: $user,
+            credential: $updatedCredential,
+            publicKey: $encodedCredential,
+        );
     }
 }

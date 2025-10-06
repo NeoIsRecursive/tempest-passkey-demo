@@ -2,20 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Auth;
+namespace App\Auth\Webauthn;
 
+use App\Auth\SessionChallengeManager;
+use App\Auth\Webauthn\RegistrationCompleted;
+use App\Auth\WebauthnConfig;
 use Exception;
 use Firehed\WebAuthn\ArrayBufferResponseParser;
-use Firehed\WebAuthn\Attestations\AttestationObject;
 use Firehed\WebAuthn\Codecs\Credential;
 use Firehed\WebAuthn\ExpiringChallenge;
-use Firehed\WebAuthn\RelyingPartyInterface;
-use Firehed\WebAuthn\Responses\AttestationInterface;
 use Firehed\WebAuthn\SingleOriginRelyingParty;
-use Tempest\Http\Request;
 use Tempest\Http\Session\Session;
-
-use function Tempest\Support\Random\uuid;
 
 final readonly class RegisterPasskey
 {
@@ -84,11 +81,11 @@ final readonly class RegisterPasskey
 
         $this->session->remove('registration_data');
 
-        return [
-            'userId' => $data['userId'],
-            'email' => $data['email'],
-            'public_key' => $encodedCredential,
-            'credential_id' => $credential->getStorageId(),
-        ];
+        return new RegistrationCompleted(
+            userUuid: $data['userId'],
+            email: $data['email'],
+            publicKey: $encodedCredential,
+            credentialId: $credential->getStorageId(),
+        );
     }
 }

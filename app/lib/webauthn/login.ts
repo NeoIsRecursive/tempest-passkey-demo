@@ -1,10 +1,7 @@
 import axios from "axios";
 
 export const login = async (email: string) => {
-  const { data } = await axios.post<{
-    challengeB64: string;
-    credential_ids: string[];
-  }>(
+  const { data } = await axios.post(
     "/auth/login/options",
     { email },
     {
@@ -17,18 +14,12 @@ export const login = async (email: string) => {
 
   // Similar to registration step 2
 
+  const options = PublicKeyCredential.parseRequestOptionsFromJSON(data);
+
   // Call the WebAuthn browser API and get the response. This may throw, which you
   // should handle. Example: user cancels or never interacts with the device.
   const credential = await navigator.credentials.get({
-    publicKey: {
-      challenge: Uint8Array.from(atob(data.challengeB64), (c) =>
-        c.charCodeAt(0),
-      ),
-      allowCredentials: data.credential_ids.map((id) => ({
-        id: Uint8Array.from(atob(id), (c) => c.charCodeAt(0)),
-        type: "public-key",
-      })),
-    },
+    publicKey: options,
   });
 
   if (!(credential instanceof PublicKeyCredential)) {
