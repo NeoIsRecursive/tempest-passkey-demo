@@ -44,7 +44,7 @@ export default function Dashboard({ user, passkeys }: Props) {
   return (
     <Layout>
       <h1 className="text-lg font-bold">Welcome, {user!.email}!</h1>
-      <p>Your user ID is: {user!.id.value}</p>
+      <p>Your user ID is: {user!.uuid}</p>
       <p>Account created: {dateFmt(user!.created_at)}</p>
 
       <h2 className="mt-6 text-md font-semibold">Registered Passkeys:</h2>

@@ -57,6 +57,7 @@ final readonly class PasskeyController
                 public_key: $data->publicKey,
                 created_at: DateTime::now(),
                 updated_at: DateTime::now(),
+                aaguid: $data->aaguid,
             );
 
         return new Json(['success' => true]);

@@ -11,12 +11,11 @@ export type Datetime = {
 };
 
 export type User = {
-  id: { value: string };
+  id: number;
   email: string;
   uuid: string;
-  passkeys: Passkey[];
-  created_at: Datetime;
-  updated_at: Datetime;
+  created_at: string;
+  updated_at: string;
 };
 
 export type Passkey = {
