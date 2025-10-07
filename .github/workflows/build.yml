@@ -77,5 +77,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner | to_lower }}/passkeydemo:latest
-            ghcr.io/${{ github.repository_owner | to_lower }}/passkeydemo:${{ github.sha }}
+            ghcr.io/neoisrecursive/passkeydemo:latest
+            ghcr.io/neoisrecursive/passkeydemo:${{ github.sha }}
