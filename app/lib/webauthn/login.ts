@@ -1,10 +1,10 @@
 import { AuthController } from "@/Generation/routes.gen";
 import axios from "axios";
 
-export const login = async (email: string) => {
+export const login = async () => {
   const { data } = await axios.post(
     AuthController.loginOptions().url,
-    { email },
+    {},
     {
       headers: {
         Accept: "application/json",

@@ -38,11 +38,11 @@ export const usePasskeyAuth = () => {
     }
   };
 
-  const doLogin = async (email: string) => {
+  const doLogin = async () => {
     setError(null);
     setIsPending(true);
     try {
-      const { redirectUri } = await login(email);
+      const { redirectUri } = await login();
       router.visit(redirectUri, {
         onFinish: () => setIsPending(false),
         onError: () => setIsPending(false),

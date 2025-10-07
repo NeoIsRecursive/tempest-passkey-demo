@@ -54,8 +54,8 @@ final readonly class RegisterPasskey
             'timeout' => 60000,
             'attestation' => 'none',
             'authenticatorSelection' => [
-                'residentKey' => 'preferred',
-                'userVerification' => 'preferred',
+                'residentKey' => 'required',
+                'userVerification' => 'required',
             ],
         ];
     }

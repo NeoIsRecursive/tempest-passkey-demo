@@ -8,11 +8,13 @@ import {
   ItemGroup,
   ItemTitle,
 } from "@/components/ui/item";
+import { Spinner } from "@/components/ui/spinner";
 import { PasskeyController } from "@/Generation/routes.gen";
 import { addPasskey } from "@/lib/webauthn/add";
 import type { PageProps } from "@/types/inertia";
 import type { Datetime, Passkey } from "@/types/models";
 import { Form, router } from "@inertiajs/react";
+import { KeyRoundIcon } from "lucide-react";
 import { useState } from "react";
 
 type Props = PageProps<{
@@ -79,7 +81,10 @@ export default function Dashboard({ user, passkeys }: Props) {
         </ItemGroup>
       )}
       <form onSubmit={handleAddPasskey}>
-        <Button disabled={isPending}>Add new passkey</Button>
+        <Button disabled={isPending}>
+          {isPending ? <Spinner /> : <KeyRoundIcon />}
+          Add new passkey
+        </Button>
       </form>
     </Layout>
   );

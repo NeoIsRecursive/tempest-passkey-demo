@@ -28,18 +28,18 @@ final class LoginPasskey
         private WebauthnConfig $config,
     ) {}
 
-    public function start(User $user)
+    public function start()
     {
-        $this->session->set(WebauthnConfig::USER_UUID_SESSION_KEY, $user->uuid);
+        // $this->session->set(WebauthnConfig::USER_UUID_SESSION_KEY, $user->uuid);
 
         $codec = new Credential();
         $challengeManager = new SessionChallengeManager($this->session);
 
-        $credentials = arr($user->passkeys)->map(
-            fn (Passkey $key) => $codec->decode($key->public_key),
-        );
+        // $credentials = arr($user->passkeys)->map(
+        //     fn (Passkey $key) => $codec->decode($key->public_key),
+        // );
 
-        $credentialsContainer = new CredentialContainer($credentials->toArray());
+        // $credentialsContainer = new CredentialContainer($credentials->toArray());
 
         // Generate and manage challenge
         $challenge = ExpiringChallenge::withLifetime(300);
@@ -47,7 +47,7 @@ final class LoginPasskey
 
         return new LoginStarted(
             challenge: $challenge,
-            credentials: $credentialsContainer,
+            relyingPartyId: $this->config->relyingPartyId,
         );
     }
 
@@ -62,7 +62,7 @@ final class LoginPasskey
         $challengeManager = new SessionChallengeManager($this->session);
         $rp = new SingleOriginRelyingParty($this->config->relyingPartyId);
 
-        if ($userUuid !== null && $userUuid !== $this->session->consume(WebauthnConfig::USER_UUID_SESSION_KEY)) {
+        if (! $userUuid) {
             throw new Exception('User handle does not match authentcating user');
         }
 
@@ -70,6 +70,10 @@ final class LoginPasskey
             ->find(uuid: $userUuid)
             ->with('passkeys')
             ->first();
+
+        if ($user === null) {
+            throw new Exception('You account has probably been deleted');
+        }
 
         $credentials = arr($user->passkeys)->map(
             fn (Passkey $key) => $codec->decode($key->public_key),

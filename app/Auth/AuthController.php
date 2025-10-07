@@ -75,8 +75,8 @@ final readonly class AuthController
 
         $user = query(User::class)
             ->create(
-                uuid: $data['userId'],
-                email: $data['email'],
+                uuid: $data->userUuid,
+                email: $data->email,
                 created_at: DateTime::now(),
                 updated_at: DateTime::now(),
             );
@@ -98,18 +98,9 @@ final readonly class AuthController
     }
 
     #[Post('/auth/login/options')]
-    public function loginOptions(Request $request, LoginPasskey $login)
+    public function loginOptions(LoginPasskey $login)
     {
-        $user = query(User::class)
-            ->find(email: $request->get('email'))
-            ->with('passkeys')
-            ->first();
-
-        if ($user === null) {
-            return new Forbidden();
-        }
-
-        $data = $login->start($user);
+        $data = $login->start();
 
         return new Json($data->jsonSerialize());
     }
