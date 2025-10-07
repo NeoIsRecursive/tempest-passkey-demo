@@ -1,35 +1,19 @@
-FROM dunglas/frankenphp
+# Must install composer dependencies before building
+# And run `pnpm run build` to generate the assets
 
-# Run FrankenPHP on plain HTTP only
-ENV SERVER_NAME=:80
-ENV FRANKENPHP_AUTO_HTTPS=0
+FROM dunglas/frankenphp AS base
 
-# Install PHP extensions you need
 RUN install-php-extensions \
     pdo_mysql \
-    gd \
     intl \
     zip \
     opcache \
+    pcntl \
     gmp
 
-# Copy your app code
+ENV SERVER_NAME=:80
+
+FROM base AS production
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY . /app
-
-ARG USER=appuser
-
-# Non root
-RUN \
-    # Use "adduser -D ${USER}" for alpine based distros
-    useradd ${USER}; \
-    mkdir -p /app/.tempest \
-    # Add additional capability to bind to port 80 and 443
-    setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp; \
-    # Give write access to /config/caddy and /data/caddy
-    chown -R ${USER}:${USER} /config/caddy /data/caddy /app/.tempest
-
-USER ${USER}
-
-
-# Expose HTTP port for Traefik
-EXPOSE 80
