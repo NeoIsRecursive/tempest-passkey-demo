@@ -39,7 +39,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-          extensions: mbstring, intl, pdo, pdo_mysql
+          extensions: mbstring, intl, pdo, pdo_mysql, gmp
           coverage: none
 
       # Cache composer dependencies
@@ -53,7 +53,7 @@ jobs:
 
       # Install Composer
       - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+        run: composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader --ignore-platform-reqs
 
       # Build frontend assets (requires composer to be present)
       - name: Build frontend assets
