@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BASE_URI: "placeholder"
+      COMPOSER_NO_INTERACTION: 1
     permissions:
       contents: read # Required for checkout
       packages: write # Required to push Docker images to GHCR
