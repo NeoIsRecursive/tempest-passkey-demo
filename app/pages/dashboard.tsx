@@ -12,7 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { PasskeyController } from "@/Generation/routes.gen";
 import { addPasskey } from "@/lib/webauthn/add";
 import type { PageProps } from "@/types/inertia";
-import type { Datetime, Passkey } from "@/types/models";
+import type { Passkey } from "@/types/models";
 import { Form, router } from "@inertiajs/react";
 import { KeyRoundIcon } from "lucide-react";
 import { useState } from "react";
@@ -36,6 +36,8 @@ export default function Dashboard({ user, passkeys }: Props) {
       router.reload();
     } catch (error) {
       setIsPending(false);
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -51,11 +53,11 @@ export default function Dashboard({ user, passkeys }: Props) {
       ) : (
         <ItemGroup className="grid gap-4">
           {passkeys.map((pk) => (
-            <Item variant="outline" key={pk.id.value}>
+            <Item variant="outline" key={pk.id}>
               <ItemContent>
                 <ItemTitle>Credential ID: {pk.credential_id}</ItemTitle>
                 <ItemDescription>
-                  Created: {dateFmt(pk.created_at)}
+                  {pk.provider ?? "Unkwnown provider"}
                   <br />
                   Last used: {dateFmt(pk.updated_at)}
                 </ItemDescription>
@@ -63,14 +65,10 @@ export default function Dashboard({ user, passkeys }: Props) {
               <ItemActions>
                 <Form
                   action={PasskeyController.remove({
-                    id: Number(pk.id.value),
+                    id: pk.id,
                     someOtherParam: "value",
                   })}
-                  onSuccess={() => {
-                    console.log("removed", pk);
-                  }}
                 >
-                  <input type="hidden" name="passkey_id" value={pk.id.value} />
                   <Button variant="destructive" size="sm">
                     Delete
                   </Button>
@@ -90,18 +88,8 @@ export default function Dashboard({ user, passkeys }: Props) {
   );
 }
 
-const dateFmt = (datetime: Datetime) => {
-  const date = new Date(
-    Date.UTC(
-      datetime.year,
-      datetime.month - 1, // months are 0-based in JS
-      datetime.day,
-      datetime.hours,
-      datetime.minutes,
-      datetime.seconds,
-      Math.floor(datetime.nanoseconds / 1e6),
-    ),
-  );
+const dateFmt = (datetime: string) => {
+  const date = new Date(datetime);
 
   return date.toLocaleString();
 };

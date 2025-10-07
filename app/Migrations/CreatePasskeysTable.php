@@ -19,6 +19,7 @@ final class CreatePasskeysTable implements MigratesUp, MigratesDown
             ->integer('user_id', unsigned: true)
             ->text('credential_id')
             ->text('public_key')
+            ->string('aaguid', nullable: true)
             ->datetime('created_at')
             ->datetime('updated_at');
     }

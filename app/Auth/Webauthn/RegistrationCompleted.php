@@ -11,5 +11,6 @@ final readonly class RegistrationCompleted
         public string $email,
         public string $publicKey,
         public string $credentialId,
+        public ?string $aaguid,
     ) {}
 }

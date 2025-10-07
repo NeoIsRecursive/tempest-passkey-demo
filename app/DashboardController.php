@@ -24,14 +24,7 @@ final readonly class DashboardController
         return inertia('dashboard', [
             'message' => 'Welcome to the dashboard!',
             'passkeys' => query(Passkey::class)
-                ->select(
-                    'id',
-                    'credential_id',
-                    'user_id',
-                    'created_at',
-                    'updated_at',
-                )
-                ->whereField('user_id', $auth->current()->id)
+                ->find(user_id: $auth->current()->id)
                 ->all(),
         ]);
     }

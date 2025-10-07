@@ -12,7 +12,9 @@ use Firehed\WebAuthn\ArrayBufferResponseParser;
 use Firehed\WebAuthn\Codecs\Credential;
 use Firehed\WebAuthn\ExpiringChallenge;
 use Firehed\WebAuthn\SingleOriginRelyingParty;
+use Symfony\Component\Uid\Uuid;
 use Tempest\Http\Session\Session;
+use Throwable;
 
 final readonly class RegisterPasskey
 {
@@ -81,11 +83,22 @@ final readonly class RegisterPasskey
 
         $this->session->remove('registration_data');
 
+        try {
+            $bin = $credential->getAttestationData()[0]
+                ->getAuthenticatorData()
+                ->getAttestedCredentialData()
+                ->aaguid->unwrap();
+            $aaguid = (string) Uuid::fromBinary($bin);
+        } catch (Throwable) {
+            $aaguid = null;
+        }
+
         return new RegistrationCompleted(
             userUuid: $data['userId'],
             email: $data['email'],
             publicKey: $encodedCredential,
             credentialId: $credential->getStorageId(),
+            aaguid: $aaguid,
         );
     }
 }

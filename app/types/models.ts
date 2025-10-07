@@ -20,9 +20,10 @@ export type User = {
 };
 
 export type Passkey = {
-  id: { value: string };
+  id: number;
   credential_id: string;
-  public_key: string;
-  created_at: Datetime;
-  updated_at: Datetime;
+  user_id: number;
+  provider: string | null;
+  created_at: string;
+  updated_at: string;
 };

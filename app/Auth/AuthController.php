@@ -88,6 +88,7 @@ final readonly class AuthController
                 user_id: (int) $user->id->value,
                 credential_id: $data->credentialId,
                 public_key: $data->publicKey,
+                aaguid: $data->aaguid,
                 created_at: DateTime::now(),
                 updated_at: DateTime::now(),
             );
