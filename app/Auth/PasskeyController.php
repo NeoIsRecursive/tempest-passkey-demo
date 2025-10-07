@@ -62,8 +62,8 @@ final readonly class PasskeyController
         return new Json(['success' => true]);
     }
 
-    #[Delete('/auth/passkeys/remove')]
-    public function remove(Request $request, Authenticator $auth)
+    #[Delete('/auth/passkey/{id}')]
+    public function remove(int $id, Authenticator $auth)
     {
         /** @var User */
         $user = $auth->current();
@@ -75,7 +75,7 @@ final readonly class PasskeyController
         query(Passkey::class)
             ->delete()
             ->whereField('user_id', $user->id)
-            ->whereField('id', $request->get('passkey_id'))
+            ->whereField('id', $id)
             ->execute();
 
         return new Back();

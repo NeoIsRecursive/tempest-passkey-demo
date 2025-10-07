@@ -1,10 +1,11 @@
+import { AuthController } from "@/Generation/routes.gen";
 import axios from "axios";
 
 export const register = async (email: string) => {
   // See https://www.w3.org/TR/webauthn-2/#sctn-sample-registration for a more annotated example
 
   const { data } = await axios.post(
-    "/auth/register/options",
+    AuthController.registrationOptions().url,
     { email },
     {
       headers: {
@@ -44,7 +45,7 @@ export const register = async (email: string) => {
 
   const { data: registeredData } = await axios.post<{
     redirectUri: string;
-  }>("/auth/register/complete", dataForResponseParser, {
+  }>(AuthController.completeRegistration().url, dataForResponseParser, {
     headers: {
       Accept: "application/json",
       "Content-type": "application/json",

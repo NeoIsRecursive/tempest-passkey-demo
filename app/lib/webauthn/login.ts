@@ -1,8 +1,9 @@
+import { AuthController } from "@/Generation/routes.gen";
 import axios from "axios";
 
 export const login = async (email: string) => {
   const { data } = await axios.post(
-    "/auth/login/options",
+    AuthController.loginOptions().url,
     { email },
     {
       headers: {
@@ -47,7 +48,7 @@ export const login = async (email: string) => {
 
   const { data: loggedInData } = await axios.post<{
     redirectUri: string;
-  }>("/auth/login/complete", dataForResponseParser, {
+  }>(AuthController.completeLogin().url, dataForResponseParser, {
     headers: {
       Accept: "application/json",
       "Content-type": "application/json",

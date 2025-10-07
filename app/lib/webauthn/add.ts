@@ -1,10 +1,11 @@
+import { PasskeyController } from "@/Generation/routes.gen";
 import axios from "axios";
 
 export const addPasskey = async (email: string) => {
   // See https://www.w3.org/TR/webauthn-2/#sctn-sample-registration for a more annotated example
 
   const { data } = await axios.post(
-    "/auth/passkeys/add-start",
+    PasskeyController.addOptions().url,
     { email },
     {
       headers: {
@@ -42,16 +43,14 @@ export const addPasskey = async (email: string) => {
 
   // Send this to your endpoint - adjust to your needs.
 
-  const {
-    data: { success },
-  } = await axios.post<{
+  const { data: d } = await axios.post<{
     success: boolean;
-  }>("/auth/passkeys/add-complete", dataForResponseParser, {
+  }>(PasskeyController.addComplete().url, dataForResponseParser, {
     headers: {
       Accept: "application/json",
       "Content-type": "application/json",
     },
   });
 
-  return success;
+  return d.success;
 };

@@ -8,6 +8,7 @@ import {
   ItemGroup,
   ItemTitle,
 } from "@/components/ui/item";
+import { PasskeyController } from "@/Generation/routes.gen";
 import { addPasskey } from "@/lib/webauthn/add";
 import type { PageProps } from "@/types/inertia";
 import type { Datetime, Passkey } from "@/types/models";
@@ -20,8 +21,6 @@ type Props = PageProps<{
 
 export default function Dashboard({ user, passkeys }: Props) {
   const [isPending, setIsPending] = useState(false);
-
-  if (!user) throw new Error("User not found");
 
   const handleAddPasskey = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,9 +39,9 @@ export default function Dashboard({ user, passkeys }: Props) {
 
   return (
     <Layout>
-      <h1 className="text-lg font-bold">Welcome, {user.email}!</h1>
-      <p>Your user ID is: {user.id.value}</p>
-      <p>Account created: {dateFmt(user.created_at)}</p>
+      <h1 className="text-lg font-bold">Welcome, {user!.email}!</h1>
+      <p>Your user ID is: {user!.id.value}</p>
+      <p>Account created: {dateFmt(user!.created_at)}</p>
 
       <h2 className="mt-6 text-md font-semibold">Registered Passkeys:</h2>
       {passkeys.length === 0 ? (
@@ -61,8 +60,10 @@ export default function Dashboard({ user, passkeys }: Props) {
               </ItemContent>
               <ItemActions>
                 <Form
-                  method="DELETE"
-                  action="/auth/passkeys/remove"
+                  action={PasskeyController.remove({
+                    id: Number(pk.id.value),
+                    someOtherParam: "value",
+                  })}
                   onSuccess={() => {
                     console.log("removed", pk);
                   }}
