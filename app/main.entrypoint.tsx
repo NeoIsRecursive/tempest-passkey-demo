@@ -6,6 +6,7 @@ axios.defaults.xsrfHeaderName = "X-XSRF-TOKEN";
 axios.defaults.xsrfCookieName = "xsrf-token";
 
 createInertiaApp({
+  title: (title) => `${title ?? "Passkeys"} - Demo App`,
   resolve: (name) => {
     const pages = import.meta.glob("./pages/**/*.tsx", {
       eager: true,
