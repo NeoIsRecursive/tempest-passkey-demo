@@ -62,7 +62,7 @@ final readonly class RegisterPasskey
         ];
     }
 
-    public function complete(array $body)
+    public function complete(array $body): RegistrationCompleted
     {
         $data = $this->session->get('registration_data');
 

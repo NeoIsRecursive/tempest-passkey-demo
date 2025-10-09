@@ -11,9 +11,13 @@ use function Tempest\Support\Filesystem\read_json;
 #[Singleton]
 final class AaguidMatcher
 {
+    /**
+     * @param array<string, array{'name': string}> $map
+     */
     public function __construct(
         private array $map = [],
     ) {
+        // @mago-expect analyzer:property-type-coercion
         $this->map = read_json(__DIR__ . '/aaguid.json');
     }
 

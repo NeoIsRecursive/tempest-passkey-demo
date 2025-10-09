@@ -22,7 +22,7 @@
   </source>
   <php>
     <env name="ENVIRONMENT" value="testing" />
-    <env name="BASE_URI" value="" />
+    <env name="BASE_URI" value="http://localhost" />
     <env name="CACHE" value="null" />
   </php>
 </phpunit>

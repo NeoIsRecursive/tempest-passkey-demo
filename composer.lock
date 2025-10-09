@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58966a31047076d3d58b44824e2e4c00",
+    "content-hash": "adcf3333f6697741bdf659d58c24c143",
     "packages": [
         {
             "name": "composer/semver",
@@ -4929,16 +4929,16 @@
     "packages-dev": [
         {
             "name": "carthage-software/mago",
-            "version": "1.0.0-beta.13",
+            "version": "1.0.0-beta.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/carthage-software/mago.git",
-                "reference": "874698cab3e24fddf3fbdc8eea7d8d1b3d255a82"
+                "reference": "3bee3745cce4575e2ceaee32a6d85051b3d10e18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carthage-software/mago/zipball/874698cab3e24fddf3fbdc8eea7d8d1b3d255a82",
-                "reference": "874698cab3e24fddf3fbdc8eea7d8d1b3d255a82",
+                "url": "https://api.github.com/repos/carthage-software/mago/zipball/3bee3745cce4575e2ceaee32a6d85051b3d10e18",
+                "reference": "3bee3745cce4575e2ceaee32a6d85051b3d10e18",
                 "shasum": ""
             },
             "require": {
@@ -4976,7 +4976,7 @@
             ],
             "support": {
                 "issues": "https://github.com/carthage-software/mago/issues",
-                "source": "https://github.com/carthage-software/mago/tree/1.0.0-beta.13"
+                "source": "https://github.com/carthage-software/mago/tree/1.0.0-beta.27"
             },
             "funding": [
                 {
@@ -4984,7 +4984,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-11T11:29:44+00:00"
+            "time": "2025-10-07T16:07:46+00:00"
         },
         {
             "name": "myclabs/deep-copy",

@@ -14,7 +14,7 @@ final readonly class LoginStarted implements JsonSerializable
         public string $relyingPartyId,
     ) {}
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
             'challenge' => $this->challenge->getBase64Url(),

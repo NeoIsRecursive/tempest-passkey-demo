@@ -14,9 +14,12 @@ use Exception;
 use Firehed\WebAuthn\ArrayBufferResponseParser;
 use Firehed\WebAuthn\Codecs\Credential;
 use Firehed\WebAuthn\CredentialContainer;
+use Firehed\WebAuthn\CredentialInterface;
 use Firehed\WebAuthn\ExpiringChallenge;
 use Firehed\WebAuthn\SingleOriginRelyingParty;
 use Tempest\Http\Session\Session;
+use Tempest\Support\Arr\ArrayInterface;
+use Tempest\Support\Arr\ImmutableArray;
 
 use function Tempest\Database\query;
 use function Tempest\Support\arr;
@@ -28,7 +31,7 @@ final class LoginPasskey
         private WebauthnConfig $config,
     ) {}
 
-    public function start()
+    public function start(): LoginStarted
     {
         // $this->session->set(WebauthnConfig::USER_UUID_SESSION_KEY, $user->uuid);
 
@@ -51,7 +54,7 @@ final class LoginPasskey
         );
     }
 
-    public function complete(array $requestBody)
+    public function complete(array $requestBody): LoginCompleted
     {
         $parser = new ArrayBufferResponseParser();
         $getResponse = $parser->parseGetResponse($requestBody);
@@ -75,6 +78,7 @@ final class LoginPasskey
             throw new Exception('You account has probably been deleted');
         }
 
+        /** @var ArrayInterface<array-key,CredentialInterface> */
         $credentials = arr($user->passkeys)->map(
             fn (Passkey $key) => $codec->decode($key->public_key),
         );

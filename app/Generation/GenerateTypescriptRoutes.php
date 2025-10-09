@@ -129,7 +129,7 @@ final class GenerateTypescriptRoutes
 
         $params = [];
         foreach ($route->parameters as $param) {
-            $type = $route->handler->getParameter($param)?->getType()->getName() ?? 'string';
+            $type = $route->handler->getParameter($param)?->getType()?->getName() ?? 'string';
 
             if (! in_array($type, $allowedTypes, true)) {
                 $type = 'string';
