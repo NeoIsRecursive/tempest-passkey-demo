@@ -1,5 +1,5 @@
 import type { PageProps } from "@/types/inertia";
-import { Form, Link, usePage } from "@inertiajs/react";
+import { Form, Head, Link, usePage } from "@inertiajs/react";
 import { Button } from "./button";
 import { AuthController, DashboardController } from "@/Generation/routes.gen";
 import { CopyrightIcon } from "lucide-react";
@@ -8,6 +8,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const { user } = usePage<PageProps>().props;
   return (
     <div className="max-w-2xl mx-auto">
+      <Head title="Passkey" />
       <header className="border-b p-6 m-6 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           Passkey Tempest
