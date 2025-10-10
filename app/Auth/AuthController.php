@@ -103,7 +103,7 @@ final readonly class AuthController
     {
         $data = $login->start();
 
-        return new Json($data->jsonSerialize());
+        return new Json($data);
     }
 
     #[Post('/auth/login/complete')]
