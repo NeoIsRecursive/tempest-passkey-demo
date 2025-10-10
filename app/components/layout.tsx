@@ -8,7 +8,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const { user } = usePage<PageProps>().props;
   return (
     <div className="max-w-2xl mx-auto">
-      <Head title="Passkey" />
+      <Head title="Passkeys" />
       <header className="border-b p-6 m-6 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           Passkey Tempest
