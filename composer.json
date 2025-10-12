@@ -3,9 +3,12 @@
   "name": "tempest/app",
   "type": "project",
   "require": {
-    "tempest/framework": "^2.0",
+    "tempest/framework": "dev-main",
     "neoisrecursive/inertia-tempest": "^1.0@beta",
     "firehed/webauthn": "^0.9.0"
+  },
+  "provide": {
+    "tempest/framework": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^12.3.10",
