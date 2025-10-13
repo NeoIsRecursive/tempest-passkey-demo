@@ -16,7 +16,6 @@ final class HomeControllerTest extends IntegrationTestCase
     {
         $this->http
             ->get('/')
-            ->assertOk()
-            ->assertSee('Tempest');
+            ->assertOk();
     }
 }

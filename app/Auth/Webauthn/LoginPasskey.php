@@ -74,7 +74,7 @@ final class LoginPasskey
             ->with('passkeys')
             ->first();
 
-        if ($user === null) {
+        if (null === $user) {
             throw new Exception('You account has probably been deleted');
         }
 

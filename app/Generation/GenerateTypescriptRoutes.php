@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Generation;
 
 use Tempest\Console\Console;
@@ -135,9 +137,9 @@ final class GenerateTypescriptRoutes
                 $type = 'string';
             }
 
-            if ($type === 'int' || $type === 'float') {
+            if ('int' === $type || 'float' === $type) {
                 $type = 'number';
-            } elseif ($type === 'bool') {
+            } elseif ('bool' === $type) {
                 $type = 'boolean';
             }
 

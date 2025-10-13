@@ -66,7 +66,7 @@ final readonly class RegisterPasskey
     {
         $data = $this->session->get('registration_data');
 
-        if ($data === null) {
+        if (null === $data) {
             throw new Exception('Missing registration data');
         }
 

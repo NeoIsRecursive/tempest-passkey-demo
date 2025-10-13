@@ -52,7 +52,7 @@ final readonly class AuthController
     {
         $user = query(User::class)->find(email: $request->email)->first();
 
-        if ($user !== null) {
+        if (null !== $user) {
             throw new HttpRequestFailed(
                 request: $request,
                 status: Status::CONFLICT,
