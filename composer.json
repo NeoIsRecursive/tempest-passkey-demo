@@ -2,20 +2,13 @@
   "$schema": "https://getcomposer.org/schema.json",
   "name": "tempest/app",
   "type": "project",
-  "repositories": [
-    {
-      "type": "path",
-      "url": "/Users/neo/workspace/lab/tempest-framework"
-    },
-    {
-      "type": "path",
-      "url": "/Users/neo/workspace/personal/inertia-tempest"
-    }
-  ],
   "require": {
-    "tempest/framework": "*",
-    "neoisrecursive/inertia-tempest": "*",
+    "tempest/framework": "dev-main",
+    "neoisrecursive/inertia-tempest": "^1.0@beta",
     "firehed/webauthn": "^0.9.0"
+  },
+  "provide": {
+    "tempest/framework": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^12.3.10",
