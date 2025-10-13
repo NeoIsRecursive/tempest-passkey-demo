@@ -3,6 +3,7 @@ import { Form, Head, Link, usePage } from "@inertiajs/react";
 import { Button } from "./button";
 import { AuthController, DashboardController } from "@/Generation/routes.gen";
 import { CopyrightIcon } from "lucide-react";
+import { Toaster } from "./ui/sonner";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const { user } = usePage<PageProps>().props;
@@ -54,6 +55,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           </a>
         </Button>
       </footer>
+      <Toaster />
     </div>
   );
 };

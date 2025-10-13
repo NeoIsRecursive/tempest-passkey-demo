@@ -7,6 +7,7 @@ namespace App\Auth;
 use App\Auth\Webauthn\RegisterPasskey;
 use App\Passkey;
 use App\User;
+use Exception;
 use Tempest\Auth\Authentication\Authenticator;
 use Tempest\DateTime\DateTime;
 use Tempest\Http\Request;

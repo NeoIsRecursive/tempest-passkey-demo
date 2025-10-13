@@ -14,8 +14,10 @@ import { addPasskey } from "@/lib/webauthn/add";
 import type { PageProps } from "@/types/inertia";
 import type { Passkey } from "@/types/models";
 import { Form, router } from "@inertiajs/react";
+import { isAxiosError } from "axios";
 import { KeyRoundIcon } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type Props = PageProps<{
   passkeys: Passkey[];
@@ -33,9 +35,19 @@ export default function Dashboard({ user, passkeys }: Props) {
       setIsPending(true);
       await addPasskey(user!.email);
 
-      router.reload();
+      router.reload({
+        only: ["passkeys"],
+      });
+
+      toast.success("Passkey added successfully!");
     } catch (error) {
-      setIsPending(false);
+      let message = "Failed to add passkey. Please try again.";
+
+      if (isAxiosError(error) && error.response?.data.message) {
+        message = error.response.data.message;
+      }
+
+      toast.error(message);
     } finally {
       setIsPending(false);
     }

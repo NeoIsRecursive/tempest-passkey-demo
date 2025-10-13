@@ -14,7 +14,6 @@ export const usePasskeyAuth = () => {
     } else if (error.name === "AbortError") {
       setError("Login was aborted. Please try again.");
     } else {
-      console.log(axios.isAxiosError(error));
       setError(
         axios.isAxiosError(error)
           ? (error.response?.data?.message ?? error.message)
@@ -30,10 +29,9 @@ export const usePasskeyAuth = () => {
     setIsPending(true);
     try {
       const { redirectUri } = await register(email);
-      router.visit(redirectUri);
+      router.visit(redirectUri, { onSuccess: () => setIsPending(false) });
     } catch (error) {
       handleError(error);
-    } finally {
       setIsPending(false);
     }
   };

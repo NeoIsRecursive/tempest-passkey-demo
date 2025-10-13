@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "425adc3fd1fafda3ad1e5181d001305e",
+    "content-hash": "2a449723e463efa89a67bc519cac1fce",
     "packages": [
         {
             "name": "composer/semver",
@@ -1682,21 +1682,15 @@
         },
         {
             "name": "neoisrecursive/inertia-tempest",
-            "version": "v1.0.0-beta.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/NeoIsRecursive/inertia-tempest.git",
-                "reference": "dce5cd843dbbfe72bc3e00c4a8adfc791139b245"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/NeoIsRecursive/inertia-tempest/zipball/dce5cd843dbbfe72bc3e00c4a8adfc791139b245",
-                "reference": "dce5cd843dbbfe72bc3e00c4a8adfc791139b245",
-                "shasum": ""
+                "type": "path",
+                "url": "/Users/neo/workspace/personal/inertia-tempest",
+                "reference": "dce5cd843dbbfe72bc3e00c4a8adfc791139b245"
             },
             "require": {
                 "php": "^8.4",
-                "tempest/framework": "^2.0"
+                "tempest/framework": "*"
             },
             "require-dev": {
                 "carthage-software/mago": "1.0.0-beta.24",
@@ -1704,14 +1698,37 @@
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/functions.php"
-                ],
                 "psr-4": {
                     "NeoIsRecursive\\Inertia\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "NeoIsRecursive\\Inertia\\Tests\\": "tests/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "mago:lint": [
+                    "vendor/bin/mago lint"
+                ],
+                "mago:fix": [
+                    "vendor/bin/mago lint --fix"
+                ],
+                "mago:fmt": [
+                    "vendor/bin/mago fmt"
+                ],
+                "qa": [
+                    "@mago:fmt",
+                    "@mago:lint",
+                    "@test"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -1722,11 +1739,9 @@
                 }
             ],
             "description": "A inertia adapter for the tempestphp framework",
-            "support": {
-                "issues": "https://github.com/NeoIsRecursive/inertia-tempest/issues",
-                "source": "https://github.com/NeoIsRecursive/inertia-tempest/tree/v1.0.0-beta.3"
-            },
-            "time": "2025-10-12T19:04:40+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "nette/php-generator",
@@ -2817,16 +2832,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.2.3",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "d27f976a332a87b5d03553c2e6f04adbe5da034f"
+                "reference": "e1aaf3061e9ae9342ed0824865e3a3360defddeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/d27f976a332a87b5d03553c2e6f04adbe5da034f",
-                "reference": "d27f976a332a87b5d03553c2e6f04adbe5da034f",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/e1aaf3061e9ae9342ed0824865e3a3360defddeb",
+                "reference": "e1aaf3061e9ae9342ed0824865e3a3360defddeb",
                 "shasum": ""
             },
             "require": {
@@ -2865,7 +2880,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.2.3"
+                "source": "https://github.com/rectorphp/rector/tree/2.2.1"
             },
             "funding": [
                 {
@@ -2873,7 +2888,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-11T21:50:23+00:00"
+            "time": "2025-10-06T21:25:14+00:00"
         },
         {
             "name": "sop/asn1",
@@ -4481,17 +4496,11 @@
         },
         {
             "name": "tempest/framework",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tempestphp/tempest-framework.git",
-                "reference": "ca8e6eec67894e7ca2540b39b88fb3875ffcc63c"
-            },
+            "version": "dev-feat/json-exception-responses",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tempestphp/tempest-framework/zipball/ca8e6eec67894e7ca2540b39b88fb3875ffcc63c",
-                "reference": "ca8e6eec67894e7ca2540b39b88fb3875ffcc63c",
-                "shasum": ""
+                "type": "path",
+                "url": "/Users/neo/workspace/lab/tempest-framework",
+                "reference": "146337dc32c525f77cf11329dc24a1356f27a97c"
             },
             "require": {
                 "doctrine/inflector": "^2.0",
@@ -4524,7 +4533,7 @@
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0|^2.0",
                 "psr/log": "^3.0.0",
-                "rector/rector": "^2.1",
+                "rector/rector": "2.2.1",
                 "symfony/cache": "^7.3",
                 "symfony/mailer": "^7.2.6",
                 "symfony/process": "^7.3",
@@ -4617,12 +4626,45 @@
                 "ext-pcntl": "Required to use some interactive console components.",
                 "ext-posix": "Required to use some interactive console components."
             },
-            "default-branch": true,
             "bin": [
                 "packages/console/bin/tempest"
             ],
             "type": "library",
             "autoload": {
+                "psr-4": {
+                    "Tempest\\Auth\\": "packages/auth/src",
+                    "Tempest\\Cache\\": "packages/cache/src",
+                    "Tempest\\Clock\\": "packages/clock/src",
+                    "Tempest\\CommandBus\\": "packages/command-bus/src",
+                    "Tempest\\Console\\": "packages/console/src",
+                    "Tempest\\Container\\": "packages/container/src",
+                    "Tempest\\Core\\": "packages/core/src",
+                    "Tempest\\Cryptography\\": "packages/cryptography/src",
+                    "Tempest\\Database\\": "packages/database/src",
+                    "Tempest\\DateTime\\": "packages/datetime/src",
+                    "Tempest\\Debug\\": "packages/debug/src",
+                    "Tempest\\Discovery\\": "packages/discovery/src",
+                    "Tempest\\EventBus\\": "packages/event-bus/src",
+                    "Tempest\\Framework\\": "src/Tempest/Framework",
+                    "Tempest\\Generation\\": "packages/generation/src",
+                    "Tempest\\HttpClient\\": "packages/http-client/src",
+                    "Tempest\\Http\\": "packages/http/src",
+                    "Tempest\\Icon\\": "packages/icon/src",
+                    "Tempest\\Intl\\": "packages/intl/src",
+                    "Tempest\\KeyValue\\": "packages/kv-store/src",
+                    "Tempest\\Log\\": "packages/log/src",
+                    "Tempest\\Mail\\": "packages/mail/src",
+                    "Tempest\\Mapper\\": "packages/mapper/src",
+                    "Tempest\\Process\\": "packages/process/src",
+                    "Tempest\\Reflection\\": "packages/reflection/src",
+                    "Tempest\\Router\\": "packages/router/src",
+                    "Tempest\\Storage\\": "packages/storage/src",
+                    "Tempest\\Support\\": "packages/support/src",
+                    "Tempest\\Upgrade\\": "packages/upgrade/src",
+                    "Tempest\\Validation\\": "packages/validation/src",
+                    "Tempest\\View\\": "packages/view/src",
+                    "Tempest\\Vite\\": "packages/vite/src"
+                },
                 "files": [
                     "packages/clock/src/functions.php",
                     "packages/command-bus/src/functions.php",
@@ -4657,58 +4699,93 @@
                     "packages/support/src/functions.php",
                     "packages/view/src/functions.php",
                     "packages/vite/src/functions.php"
-                ],
+                ]
+            },
+            "autoload-dev": {
                 "psr-4": {
-                    "Tempest\\Log\\": "packages/log/src",
-                    "Tempest\\Auth\\": "packages/auth/src",
-                    "Tempest\\Core\\": "packages/core/src",
-                    "Tempest\\Http\\": "packages/http/src",
-                    "Tempest\\Icon\\": "packages/icon/src",
-                    "Tempest\\Intl\\": "packages/intl/src",
-                    "Tempest\\Mail\\": "packages/mail/src",
-                    "Tempest\\View\\": "packages/view/src",
-                    "Tempest\\Vite\\": "packages/vite/src",
-                    "Tempest\\Cache\\": "packages/cache/src",
-                    "Tempest\\Clock\\": "packages/clock/src",
-                    "Tempest\\Debug\\": "packages/debug/src",
-                    "Tempest\\Mapper\\": "packages/mapper/src",
-                    "Tempest\\Router\\": "packages/router/src",
-                    "Tempest\\Console\\": "packages/console/src",
-                    "Tempest\\Process\\": "packages/process/src",
-                    "Tempest\\Storage\\": "packages/storage/src",
-                    "Tempest\\Support\\": "packages/support/src",
-                    "Tempest\\Upgrade\\": "packages/upgrade/src",
-                    "Tempest\\Database\\": "packages/database/src",
-                    "Tempest\\DateTime\\": "packages/datetime/src",
-                    "Tempest\\EventBus\\": "packages/event-bus/src",
-                    "Tempest\\KeyValue\\": "packages/kv-store/src",
-                    "Tempest\\Container\\": "packages/container/src",
-                    "Tempest\\Discovery\\": "packages/discovery/src",
-                    "Tempest\\Framework\\": "src/Tempest/Framework",
-                    "Tempest\\CommandBus\\": "packages/command-bus/src",
-                    "Tempest\\Generation\\": "packages/generation/src",
-                    "Tempest\\HttpClient\\": "packages/http-client/src",
-                    "Tempest\\Reflection\\": "packages/reflection/src",
-                    "Tempest\\Validation\\": "packages/validation/src",
-                    "Tempest\\Cryptography\\": "packages/cryptography/src"
+                    "Tempest\\Auth\\Tests\\": "packages/auth/tests",
+                    "Tempest\\Cache\\Tests\\": "packages/cache/tests",
+                    "Tempest\\Clock\\Tests\\": "packages/clock/tests",
+                    "Tempest\\CommandBus\\Tests\\": "packages/command-bus/tests",
+                    "Tempest\\Console\\Tests\\": "packages/console/tests",
+                    "Tempest\\Container\\Tests\\": "packages/container/tests",
+                    "Tempest\\Core\\Tests\\": "packages/core/tests",
+                    "Tempest\\Cryptography\\Tests\\": "packages/cryptography/tests",
+                    "Tempest\\Database\\Tests\\": "packages/database/tests",
+                    "Tempest\\DateTime\\Tests\\": "packages/datetime/tests",
+                    "Tempest\\EventBus\\Tests\\": "packages/event-bus/tests",
+                    "Tempest\\Generation\\Tests\\": "packages/generation/tests",
+                    "Tempest\\HttpClient\\Tests\\": "packages/http-client/tests",
+                    "Tempest\\Http\\Tests\\": "packages/http/tests",
+                    "Tempest\\Icon\\Tests\\": "packages/icon/tests",
+                    "Tempest\\Intl\\Tests\\": "packages/intl/tests",
+                    "Tempest\\KeyValue\\Tests\\": "packages/kv-store/tests",
+                    "Tempest\\Log\\Tests\\": "packages/log/tests",
+                    "Tempest\\Mail\\Tests\\": "packages/mail/tests",
+                    "Tempest\\Mapper\\Tests\\": "packages/mapper/tests",
+                    "Tempest\\Process\\Tests\\": "packages/process/tests",
+                    "Tempest\\Reflection\\Tests\\": "packages/reflection/tests",
+                    "Tempest\\Router\\Tests\\": "packages/router/tests",
+                    "Tempest\\Storage\\Tests\\": "packages/storage/tests",
+                    "Tempest\\Support\\Tests\\": "packages/support/tests",
+                    "Tempest\\Upgrade\\Tests\\": "packages/upgrade/tests",
+                    "Tempest\\Validation\\Tests\\": "packages/validation/tests",
+                    "Tempest\\View\\Tests\\": "packages/view/tests",
+                    "Tempest\\Vite\\Tests\\": "packages/vite/tests",
+                    "Tests\\Tempest\\": "tests"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "phpunit": [
+                    "@php -d memory_limit=2G vendor/bin/phpunit --display-warnings --display-skipped --display-deprecations --display-errors --display-notices"
+                ],
+                "coverage": [
+                    "vendor/bin/phpunit --coverage-html build/reports/html --coverage-clover build/reports/clover.xml"
+                ],
+                "fmt": [
+                    "vendor/bin/mago fmt"
+                ],
+                "lint:fix": [
+                    "vendor/bin/mago lint --fix --format-after-fix"
+                ],
+                "lint": [
+                    "vendor/bin/mago lint --potentially-unsafe --minimum-fail-level=note"
+                ],
+                "phpstan": [
+                    "vendor/bin/phpstan analyse src tests --memory-limit=1G"
+                ],
+                "rector": [
+                    "vendor/bin/rector process --no-ansi"
+                ],
+                "merge": [
+                    "php -d\"error_reporting = E_ALL & ~E_DEPRECATED\" vendor/bin/monorepo-builder merge"
+                ],
+                "intl:plural": [
+                    "./packages/intl/bin/plural-rules.php"
+                ],
+                "release": [
+                    "composer qa",
+                    "./bin/release"
+                ],
+                "qa": [
+                    "composer fmt",
+                    "composer lint:fix",
+                    "composer lint",
+                    "composer merge",
+                    "composer rector",
+                    "./bin/validate-packages",
+                    "./tempest discovery:clear --no-interaction",
+                    "composer phpunit",
+                    "composer phpstan"
+                ]
+            },
             "license": [
                 "MIT"
             ],
             "description": "The PHP framework that gets out of your way.",
-            "support": {
-                "issues": "https://github.com/tempestphp/tempest-framework/issues",
-                "source": "https://github.com/tempestphp/tempest-framework/tree/main"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/tempestphp",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-10-12T18:47:17+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "tempest/highlight",
@@ -6606,10 +6683,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "neoisrecursive/inertia-tempest": 10,
-        "tempest/framework": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {},
