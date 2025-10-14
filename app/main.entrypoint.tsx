@@ -7,12 +7,19 @@ axios.defaults.xsrfCookieName = "xsrf-token";
 
 createInertiaApp({
   title: (title) => `${title ?? "Passkeys"} - Demo App`,
-  resolve: (name) => {
-    const pages = import.meta.glob("./pages/**/*.tsx", {
-      eager: true,
-    });
+  progress: {
+    color: "var(--color-primary)"
+  },
+  resolve: async (name) => {
+    const pages = import.meta.glob("./pages/**/*.tsx",);
 
-    return pages[`./pages/${name}.tsx`];
+    const page = pages[`./pages/${name}.tsx`];
+
+    if (!page) {
+      throw new Error(`Unknown page ${name}.tsx`);
+    }
+
+    return await page();
   },
   setup: ({ el, App, props }) => createRoot(el).render(<App {...props} />),
 });
