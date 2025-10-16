@@ -1,17 +1,13 @@
 import { createInertiaApp } from "@inertiajs/react";
-import axios from "axios";
 import { createRoot } from "react-dom/client";
-
-axios.defaults.xsrfHeaderName = "X-XSRF-TOKEN";
-axios.defaults.xsrfCookieName = "xsrf-token";
 
 createInertiaApp({
   title: (title) => `${title ?? "Passkeys"} - Demo App`,
   progress: {
-    color: "var(--color-primary)"
+    color: "var(--color-primary)",
   },
   resolve: async (name) => {
-    const pages = import.meta.glob("./pages/**/*.tsx",);
+    const pages = import.meta.glob("./pages/**/*.tsx");
 
     const page = pages[`./pages/${name}.tsx`];
 
