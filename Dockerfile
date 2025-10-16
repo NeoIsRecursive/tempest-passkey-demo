@@ -17,3 +17,5 @@ FROM base AS production
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY . /app
+
+ENTRYPOINT [ "entrypoint.sh" ]
