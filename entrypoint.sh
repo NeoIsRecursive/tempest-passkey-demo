@@ -4,4 +4,4 @@
 ./tempest discovery:generate
 ./tempest migrate:up --force
 
-docker-php-entrypoint
+exec docker-php-entrypoint
