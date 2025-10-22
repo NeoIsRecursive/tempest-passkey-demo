@@ -88,7 +88,7 @@ jobs:
       - name: Dokploy Deployment
         run: |
           curl -X 'POST' \
-            "https://${{ secrets.DOKPLOY_URL }}/api/trpc/application.deploy" \
+            "${{ secrets.DOKPLOY_URL }}/api/trpc/application.deploy" \
             -H "accept: application/json" \
             -H "x-api-key: ${{ secrets.DOKPLOY_AUTH_TOKEN }}" \
             -H "Content-Type: application/json" \
