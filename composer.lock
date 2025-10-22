@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "425adc3fd1fafda3ad1e5181d001305e",
+    "content-hash": "b8216d631372eeae59367fd9f6c0327e",
     "packages": [
         {
             "name": "composer/semver",
@@ -1326,16 +1326,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.30.0",
+            "version": "3.30.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "2203e3151755d874bb2943649dae1eb8533ac93e"
+                "reference": "c139fd65c1f796b926f4aec0df37f6caa959a8da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/2203e3151755d874bb2943649dae1eb8533ac93e",
-                "reference": "2203e3151755d874bb2943649dae1eb8533ac93e",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/c139fd65c1f796b926f4aec0df37f6caa959a8da",
+                "reference": "c139fd65c1f796b926f4aec0df37f6caa959a8da",
                 "shasum": ""
             },
             "require": {
@@ -1403,9 +1403,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.30.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.30.1"
             },
-            "time": "2025-06-25T13:29:59+00:00"
+            "time": "2025-10-20T15:35:26+00:00"
         },
         {
             "name": "league/flysystem-local",
@@ -2817,16 +2817,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "d27f976a332a87b5d03553c2e6f04adbe5da034f"
+                "reference": "904f12f23858ef54ec5782b05cb2979b703cb185"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/d27f976a332a87b5d03553c2e6f04adbe5da034f",
-                "reference": "d27f976a332a87b5d03553c2e6f04adbe5da034f",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/904f12f23858ef54ec5782b05cb2979b703cb185",
+                "reference": "904f12f23858ef54ec5782b05cb2979b703cb185",
                 "shasum": ""
             },
             "require": {
@@ -2865,7 +2865,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.2.3"
+                "source": "https://github.com/rectorphp/rector/tree/2.2.4"
             },
             "funding": [
                 {
@@ -2873,7 +2873,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-11T21:50:23+00:00"
+            "time": "2025-10-22T07:50:23+00:00"
         },
         {
             "name": "sop/asn1",
@@ -4481,16 +4481,16 @@
         },
         {
             "name": "tempest/framework",
-            "version": "dev-main",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tempestphp/tempest-framework.git",
-                "reference": "061b576d5530640b19aac21ff71dca67dab56b5f"
+                "reference": "cc300c6015da8ccde117558221ed6918bb8741e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tempestphp/tempest-framework/zipball/061b576d5530640b19aac21ff71dca67dab56b5f",
-                "reference": "061b576d5530640b19aac21ff71dca67dab56b5f",
+                "url": "https://api.github.com/repos/tempestphp/tempest-framework/zipball/cc300c6015da8ccde117558221ed6918bb8741e3",
+                "reference": "cc300c6015da8ccde117558221ed6918bb8741e3",
                 "shasum": ""
             },
             "require": {
@@ -4617,7 +4617,6 @@
                 "ext-pcntl": "Required to use some interactive console components.",
                 "ext-posix": "Required to use some interactive console components."
             },
-            "default-branch": true,
             "bin": [
                 "packages/console/bin/tempest"
             ],
@@ -4700,7 +4699,7 @@
             "description": "The PHP framework that gets out of your way.",
             "support": {
                 "issues": "https://github.com/tempestphp/tempest-framework/issues",
-                "source": "https://github.com/tempestphp/tempest-framework/tree/main"
+                "source": "https://github.com/tempestphp/tempest-framework/tree/v2.4.0"
             },
             "funding": [
                 {
@@ -4708,7 +4707,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-14T17:50:31+00:00"
+            "time": "2025-10-22T06:33:20+00:00"
         },
         {
             "name": "tempest/highlight",
@@ -6607,8 +6606,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "neoisrecursive/inertia-tempest": 10,
-        "tempest/framework": 20
+        "neoisrecursive/inertia-tempest": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
