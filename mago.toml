@@ -1,24 +1,44 @@
-php-version = "8.4.0"
+#:schema https://mago.carthage.software/1.42.0/schema.json
+# Welcome to Mago!
+# For full documentation, see https://mago.carthage.software/1.42.0/en/tools/overview/
+version = "1"
+php-version = "8.5.0"
 
 [source]
-paths = ["app", "tests"]
+workspace = "."
+paths = ["./app", "./packages/generation", "./packages/passkeys"]
 includes = ["vendor"]
-excludes = [
-  "./vendor/symfony/cache/Traits/ValueWrapper.php",
-  "./vendor/composer",
-]
+excludes = []
+
+[source.glob]
+literal-separator = true
 
 [formatter]
-print-width = 180
-tab-width = 4
-use-tabs = false
-null-type-hint = "question"
-space-before-arrow-function-parameter-list-parenthesis = true
-space-after-logical-not-unary-prefix-operator = true
-always-break-named-arguments-list = false
-preserve-breaking-member-access-chain = true
-preserve-breaking-argument-list = true
-preserve-breaking-array-like = true
-preserve-breaking-parameter-list = true
-preserve-breaking-attribute-list = true
-preserve-breaking-conditional-expression = true
+preset = "tempest"
+
+[linter]
+integrations = ["tempest"]
+
+[linter.rules]
+excessive-parameter-list = { enabled = false }
+ambiguous-function-call = { enabled = false }
+literal-named-argument = { enabled = false }
+halstead = { effort-threshold = 7000 }
+
+[analyzer]
+plugins = []
+find-unused-definitions = true
+find-unused-expressions = true
+analyze-dead-code = true
+memoize-properties = true
+check-throws = false
+unchecked-exceptions = []
+unchecked-exception-classes = []
+check-missing-override = false
+find-unused-parameters = true
+strict-list-index-checks = true
+strict-array-index-existence = true
+allow-array-truthy-operand = false
+no-boolean-literal-comparison = true
+check-missing-type-hints = true
+register-super-globals = true

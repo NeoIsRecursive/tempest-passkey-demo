@@ -1,0 +1,2 @@
+validation_error:
+  is_unique: "This {$column} already exists in the {$table} table."
