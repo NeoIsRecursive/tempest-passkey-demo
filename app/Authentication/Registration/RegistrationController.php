@@ -19,7 +19,6 @@ use Tempest\Http\Session\Session;
 use Tempest\Router\Get;
 use Tempest\Router\Post;
 
-use function NeoIsRecursive\Inertia\inertia;
 use function Tempest\Database\query;
 use function Tempest\DateTime\now;
 use function Tempest\Router\uri;
@@ -29,7 +28,7 @@ final readonly class RegistrationController
     #[Get('/register')]
     public function view(): Component
     {
-        return inertia('register');
+        return new Component('register');
     }
 
     #[Post('/authentication/register')]
@@ -57,7 +56,7 @@ final readonly class RegistrationController
     #[Get('/authentication/verify')]
     public function verifyForm(): Component
     {
-        return inertia('verify-email');
+        return new Component('verify-email');
     }
 
     #[Post('/authentication/verify')]
