@@ -48,8 +48,6 @@ const formatDate = (date: string) =>
 export default function Passkeys({ credentials }: Props) {
   const [snapshot, send, actorRef] = useActor(createPasskeyMachine);
 
-  console.log(snapshot.context.error);
-
   useEffect(() => {
     const sub = actorRef.on("success", () => {
       router.reload({ only: ["credentials"] });

@@ -14,7 +14,7 @@ export const CenteredLayout = ({ children }: PropsWithChildren) => {
             href={DashboardController.__invoke()}
             className="text-lg font-bold"
           >
-            My app
+            Demo
           </Link>
           <Button
             variant="destructive"
