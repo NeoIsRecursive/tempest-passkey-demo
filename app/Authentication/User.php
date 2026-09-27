@@ -18,6 +18,7 @@ final class User implements Authenticatable, JsonSerializable
         public ?DateTime $email_verified_at,
     ) {}
 
+    /** @return array{id: int|string, email: string} */
     public function jsonSerialize(): array
     {
         return [
