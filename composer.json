@@ -2,7 +2,7 @@
   "$schema": "https://getcomposer.org/schema.json",
   "require": {
     "tempest/framework": "^3.14",
-    "neoisrecursive/inertia-tempest": "v1.0.0-rc.2",
+    "neoisrecursive/inertia-tempest": "v1.0.0-rc.3",
     "web-auth/webauthn-lib": "^5.3"
   },
   "autoload": {
