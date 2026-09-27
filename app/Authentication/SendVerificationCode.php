@@ -6,6 +6,7 @@ namespace App\Authentication;
 
 use App\Authentication\Verification\CodeGenerator;
 use Tempest\Http\Session\Session;
+use Tempest\Log\Logger;
 use Tempest\Mail\GenericEmail;
 use Tempest\Mail\Mailer;
 
@@ -17,6 +18,7 @@ final readonly class SendVerificationCode
     public function __construct(
         private Session $session,
         private Mailer $mailer,
+        private Logger $logger,
     ) {}
 
     public function __invoke(string $email, VerificationPurpose $purpose): void
@@ -47,5 +49,7 @@ final readonly class SendVerificationCode
         <p>Here is your code</p>
         <p>{$code}</p>
         HTML));
+
+        $this->logger->info('Sent registration/verification email', ['email' => $email]);
     }
 }
