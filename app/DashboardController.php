@@ -6,13 +6,15 @@ namespace App;
 
 use App\Authentication\MustBeAuthenticated;
 use NeoIsRecursive\Inertia\Http\Component;
+use Tempest\Log\Logger;
 use Tempest\Router\Get;
 
 final readonly class DashboardController
 {
     #[Get('/'), MustBeAuthenticated]
-    public function __invoke(): Component
+    public function __invoke(Logger $logger): Component
     {
+        $logger->info('testing log message');
         return new Component('dashboard');
     }
 }

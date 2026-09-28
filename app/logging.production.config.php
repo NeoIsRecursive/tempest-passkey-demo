@@ -2,8 +2,14 @@
 
 declare(strict_types=1);
 
-use Tempest\Log\Config\SysLogConfig;
+use App\Logging\SocketLogChannel;
+use Tempest\Log\Config\SimpleLogConfig;
 
-return new SysLogConfig(
-    identity: 'Passkey-demo',
+use function Tempest\internal_storage_path;
+
+return new SimpleLogConfig(
+    path: internal_storage_path('logs'),
+    channels: [
+        new SocketLogChannel('unix://tmp/cloud-init.sock'),
+    ],
 );
