@@ -14,7 +14,6 @@ final readonly class DashboardController
     #[Get('/'), MustBeAuthenticated]
     public function __invoke(Logger $logger): Component
     {
-        $logger->info('testing log message');
         return new Component('dashboard');
     }
 }

@@ -3,14 +3,17 @@
 declare(strict_types=1);
 
 use App\Logging\SocketLogChannel;
-use Tempest\Log\Config\SimpleLogConfig;
+use Tempest\Log\Config\MultipleChannelsLogConfig;
 
 use function Tempest\env;
-use function Tempest\internal_storage_path;
 
-return new SimpleLogConfig(
-    path: internal_storage_path('logs', 'tempest.log'),
+
+/** @var string */
+$connectionString = env("LARAVEL_CLOUD_LOG_SOCKET", "unix:///tmp/cloud-init.sock");
+
+return new MultipleChannelsLogConfig(
+    prefix: null,
     channels: [
-        new SocketLogChannel(env('LARAVEL_CLOUD_LOG_SOCKET', 'unix:///tmp/cloud-init.sock')),
+        new SocketLogChannel($connectionString),
     ],
 );

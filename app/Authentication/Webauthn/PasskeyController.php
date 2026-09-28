@@ -13,6 +13,7 @@ use Tempest\Database\Direction;
 use Tempest\Http\Responses\Back;
 use Tempest\Http\Responses\Created;
 use Tempest\Http\Responses\Json;
+use Tempest\Log\Logger;
 use Tempest\Router\Delete;
 use Tempest\Router\Get;
 use Tempest\Router\Post;
@@ -71,9 +72,11 @@ final readonly class PasskeyController
     }
 
     #[Delete('/webauthn/passkeys/{id}'), MustBeAuthenticated]
-    public function destroy(User $user, string $id): Back
+    public function destroy(User $user, string $id, Logger $logger): Back
     {
         query(Passkey::class)->delete()->where('id', $id)->transform(new BelongsToUser($user))->execute();
+
+        $logger->info("Deleted passkey", ['user' => $user, 'passkey_id' => $id]);
 
         return new Back();
     }

@@ -34,7 +34,7 @@ final readonly class SocketLogChannel implements LogChannel
                 connectionString: $this->connectionString,
                 level: $level,
                 bubble: $this->bubble,
-                persistent: false,
+                persistent: true,
                 timeout: 2,
                 writingTimeout: 10,
                 connectionTimeout: 2,
